@@ -3,9 +3,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
+#include <limits.h>
 #include "randomize.h"
 #include "buildTree.h"
 #include "debug.h"
+#include "searchTree.h"
 
 int main(int argc, char **argv) {
     int arguments = argc;
@@ -39,6 +41,12 @@ int main(int argc, char **argv) {
         rand32_t *genProbes = rand32_init(time(NULL));
         int32_t *probes = generate(nProbes, genProbes);
         free(genProbes);
+
+        int ranges[nProbes];
+        for (i = 0; i < nProbes; i++) {
+            ranges[i] = searchTree(tree, fanout, levels, probes[i]);
+            printf("Probe: %d | Range: %d\n", probes[i], ranges[i]);
+        }
 
         return 0;
     }
