@@ -1,8 +1,5 @@
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <assert.h>
 #include <limits.h>
 
 int32_t** buildTree(int *keys, int *fanout, int nKeys, int levels) {
@@ -36,6 +33,7 @@ int32_t** buildTree(int *keys, int *fanout, int nKeys, int levels) {
         return NULL;
     }
     tree = (int32_t**)ptMem;
+
     int f = 1;
     int lSize;
     for (i = 0; i < levels; i++) {

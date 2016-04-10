@@ -1,8 +1,5 @@
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <assert.h>
 
 void printTree(int32_t **tree, int *fanout, int levels) {
     int i, j;

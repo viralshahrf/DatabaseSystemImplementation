@@ -1,13 +1,7 @@
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <assert.h>
 #include <limits.h>
-#include "randomize.h"
-#include "buildTree.h"
-#include "debug.h"
-#include "searchTree.h"
+#include "run.h"
 
 int main(int argc, char **argv) {
     int arguments = argc;
@@ -25,16 +19,13 @@ int main(int argc, char **argv) {
         int nKeys = atoi(argv[1]);
         int nProbes = atoi(argv[2]);
 
-        rand32_t *genKeys = rand32_init(time(NULL));
-        int32_t *keys = generate_sorted_unique(nKeys, genKeys);
-        free(genKeys);
-        for (i = 1 ; i < nKeys; ++i) {
-            assert(keys[i - 1] < keys[i]);
+        int32_t *keys = generate_random(nKeys, 1);
+        if (keys == NULL) {
+            printf("Could not generate keys\n");
+            return -1;
         }
 
-        struct timeval time0;
-        gettimeofday(&time0, 0);
-        long phase0 = 1000000 * time0.tv_sec + time0.tv_usec;
+        long phase0 = getCurrentTime();
 
         int32_t **tree = buildTree(keys, fanout, nKeys, levels);
         if (tree == NULL) {
@@ -43,13 +34,13 @@ int main(int argc, char **argv) {
         }
         //printTree(tree, fanout, levels);
 
-        rand32_t *genProbes = rand32_init(time(NULL));
-        int32_t *probes = generate(nProbes, genProbes);
-        free(genProbes);
+        int32_t *probes = generate_random(nProbes, 0);
+        if (probes == NULL) {
+            printf("Could not generate probes\n");
+            return -1;
+        }
 
-        struct timeval time1;
-        gettimeofday(&time1, 0);
-        long phase1 = 1000000 * time1.tv_sec + time1.tv_usec;
+        long phase1 = getCurrentTime();
         printf("Phase 1 Time: %ld usecs\n", phase1 - phase0);
 
         int ranges[nProbes];
@@ -57,18 +48,14 @@ int main(int argc, char **argv) {
             ranges[i] = searchTree(tree, fanout, levels, probes[i]);
         }
 
-        struct timeval time2;
-        gettimeofday(&time2, 0);
-        long phase2 = 1000000 * time2.tv_sec + time2.tv_usec;
+        long phase2 = getCurrentTime();
         printf("Phase 2 Time: %ld usecs\n", phase2 - phase1);
 
         for (i = 0; i < nProbes; i++) {
             printf("Probe: %d | Range: %d\n", probes[i], ranges[i]);
         }
 
-        struct timeval time3;
-        gettimeofday(&time3, 0);
-        long phase3 = 1000000 * time3.tv_sec + time3.tv_usec;
+        long phase3 = getCurrentTime();;
         printf("Phase 3 Time: %ld usecs\n", phase3 - phase2);
 
         return 0;

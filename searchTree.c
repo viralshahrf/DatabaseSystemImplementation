@@ -1,8 +1,5 @@
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <assert.h>
 
 int* binarySearch(int32_t *level, int sIndex, int eIndex, int32_t value) {
     int *range = (int*)malloc(2*sizeof(int));

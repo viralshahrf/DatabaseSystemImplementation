@@ -2,8 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <assert.h>
-#include "randomize.h"
+
+typedef struct {
+        size_t index;
+        uint32_t num[625];
+} rand32_t;
 
 rand32_t *rand32_init(uint32_t x)
 {
@@ -101,4 +104,20 @@ void ratio_per_bit(const int32_t *a, size_t n)
 	for (j = 0 ; j != 32 ; ++j)
 		fprintf(stderr, "%2ld: %.2f%%\n", j + 1, c[j] * 100.0 / n);
 	free(c);
+}
+
+int32_t* generate_random(int n, int  sorted) {
+    rand32_t *generator = rand32_init(time(NULL));
+
+    int32_t *generation = NULL;
+
+    if (sorted == 1) {
+        generation = generate_sorted_unique(n, generator);
+    } else {
+        generation = generate(n, generator);
+    }
+
+    free(generator);
+
+    return generation;
 }
