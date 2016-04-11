@@ -6,10 +6,10 @@ make :
 	gcc -c searchTree.c
 	gcc -c timing.c
 	gcc -c run.c
-	gcc randomize.o buildTree.o searchTree.o debug.o timing.o run.o -o treeTraversal
+	gcc randomize.o buildTree.o searchTree.o debug.o timing.o run.o -o build
 .PHONY : clean
 clean :
-	rm -f treeTraversal \
+	rm -f build \
 	*.o \
 	*.a
 	rm -rf *.swp

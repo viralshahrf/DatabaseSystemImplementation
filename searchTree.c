@@ -2,10 +2,15 @@
 #include <stdlib.h>
 
 int* binarySearch(int32_t *level, int sIndex, int eIndex, int32_t value) {
-    int *range = (int*)malloc(2*sizeof(int));
+    int *range;
     if (sIndex <= eIndex) {
         int mIndex = (sIndex + eIndex)/2;
         if (level[mIndex] == value) {
+            int *mRange = binarySearch(level, sIndex, mIndex-1, value);
+            if (mRange[1] != -1) {
+                mIndex = mRange[1];
+            }
+            range = (int*)malloc(2*sizeof(int));
             if (mIndex - 1 < sIndex) {
                 range[0] = -1;
                 range[1] = mIndex;
@@ -29,6 +34,7 @@ int* binarySearch(int32_t *level, int sIndex, int eIndex, int32_t value) {
             return range;
         }
     } else {
+        range = (int*)malloc(2*sizeof(int));
         range[0] = -1;
         range[1] = -1;
         return range;
