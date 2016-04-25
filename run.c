@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
             printf("Error in building tree\n");
             return -1;
         }
-        //printTree(tree, fanout, levels);
+        printTree(tree, fanout, levels);
 
         int32_t *probes = generate_random(nProbes, 0);
         if (probes == NULL) {
@@ -57,6 +57,11 @@ int main(int argc, char **argv) {
 
         long phase3 = getCurrentTime();;
         printf("Phase 3 Time: %ld usecs\n", phase3 - phase2);
+ 
+        // Probe using SIMD instructions
+        for (i = 0; i < nProbes; i++) {
+            ranges[i] = searchTreeSIMD(tree, fanout, levels, probes[i]);
+        }
 
         return 0;
     }
