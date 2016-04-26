@@ -29,15 +29,9 @@ int searchSIMDTree(int32_t **tree, int *fanout, int levels, int32_t value) {
             __m128i delimiters = _mm_load_si128((__m128i const*)&tree[iLevel][lOffset + iter*4]);
             __m128i compare = _mm_cmpgt_epi32(delimiters, key);
             __m128i equals = _mm_cmpeq_epi32(delimiters,key);
-            //__m128 compare = _mm_cmpge_ps(_mm_castsi128_ps(delimiters), _mm_castsi128_ps(key));
             cmpmask = _mm_movemask_ps(_mm_castsi128_ps(compare));
             eqmask = _mm_movemask_ps(_mm_castsi128_ps(equals));
-            //cmpmask = _mm_movemask_ps(compare);
             cmpmask = cmpmask | eqmask;
-            //if (eqmask) {
-            //    position = _bit_scan_forward(eqmask);
-            //    break;
-            //} else if (cmpmask) {
             if (cmpmask) {
                 position = _bit_scan_forward(cmpmask);
                 break;
