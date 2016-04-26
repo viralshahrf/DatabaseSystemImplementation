@@ -66,6 +66,12 @@ int main(int argc, char **argv) {
             printf("Probe: %d | Range: %d\n", probes[i], ranges[i]);
         }
 
+        int32_t *result = searchSIMD959Tree(tree, probes, nProbes);
+
+        for (i = 0; i < nProbes; i++) {
+            printf("Probe: %d | Range: %d\n", probes[i], result[i]);
+        }
+
         return 0;
     }
 }

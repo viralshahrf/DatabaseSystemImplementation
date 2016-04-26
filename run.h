@@ -16,6 +16,9 @@ int searchTree(int32_t **tree, int *fanout, int levels, int32_t value);
 //Search an SIMD Index Tree
 int searchSIMDTree(int32_t **tree, int *fanout, int levels, int32_t value);
 
+//Search an SIMD 959 Tree
+int32_t* searchSIMD959Tree(int32_t **tree, int32_t* probes, int nProbes);
+
 //Timing
 long getCurrentTime();
 
