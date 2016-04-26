@@ -13,6 +13,9 @@ void printTree(int32_t **tree, int *fanout, int levels);
 //Search an Index Tree
 int searchTree(int32_t **tree, int *fanout, int levels, int32_t value);
 
+//Search an SIMD Index Tree
+int searchSIMDTree(int32_t **tree, int *fanout, int levels, int32_t value);
+
 //Timing
 long getCurrentTime();
 

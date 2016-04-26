@@ -33,12 +33,15 @@ int main(int argc, char **argv) {
             return -1;
         }
         printTree(tree, fanout, levels);
-
+/*
         int32_t *probes = generate_random(nProbes, 0);
         if (probes == NULL) {
             printf("Could not generate probes\n");
             return -1;
         }
+*/
+
+        int32_t probes[1] = {INT_MAX};
 
         long phase1 = getCurrentTime();
         printf("Phase 1 Time: %ld usecs\n", phase1 - phase0);
@@ -60,7 +63,11 @@ int main(int argc, char **argv) {
  
         // Probe using SIMD instructions
         for (i = 0; i < nProbes; i++) {
-            ranges[i] = searchTreeSIMD(tree, fanout, levels, probes[i]);
+            ranges[i] = searchSIMDTree(tree, fanout, levels, probes[i]);
+        }
+
+        for (i = 0; i < nProbes; i++) {
+            printf("Probe: %d | Range: %d\n", probes[i], ranges[i]);
         }
 
         return 0;
