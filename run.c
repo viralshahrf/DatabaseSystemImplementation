@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
             printf("Error in building tree\n");
             return -1;
         }
-        printTree(tree, fanout, levels);
+        //printTree(tree, fanout, levels);
 
         int32_t *probes = generate_random(nProbes, 0);
         if (probes == NULL) {
