@@ -3,7 +3,7 @@ make :
 	gcc -c randomize.c
 	gcc -c buildTree.c
 	gcc -c debug.c
-	gcc -c searchTree.c
+	gcc -c -O3 -flto -march=native searchTree.c
 	gcc -c -msse4.2 -msse4a -O3 -flto -march=native searchSIMDTree.c
 	gcc -c -msse4.2 -msse4a -O3 -flto -march=native searchSIMD959Tree.c
 	gcc -c timing.c
