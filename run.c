@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
         }
 
         long phase10 = getCurrentTime();
-        printf("Phase 1 Time: %ld usecs\n", phase10 - phase00);
+        printf("Phase 1|Part 1 Time: %ld usecs\n", phase10 - phase00);
 
         int ranges[nProbes];
         for (i = 0; i < nProbes; i++) {
@@ -49,14 +49,14 @@ int main(int argc, char **argv) {
         }
 
         long phase20 = getCurrentTime();
-        printf("Phase 2|1 Time: %ld usecs\n", phase20 - phase10);
+        printf("Phase 2|Part 1 Time: %ld usecs\n", phase20 - phase10);
 
         for (i = 0; i < nProbes; i++) {
             printf("Probe: %d | Range: %d\n", probes[i], ranges[i]);
         }
 
         long phase30 = getCurrentTime();
-        printf("Phase 3|1 Time: %ld usecs\n", phase30 - phase20);
+        printf("Phase 3|Part 1 Time: %ld usecs\n", phase30 - phase20);
 
         int SIMD = 1;
         for (i = 0; i < levels; i++) {
@@ -73,14 +73,14 @@ int main(int argc, char **argv) {
             }
 
             long phase21 = getCurrentTime();
-            printf("Phase 2|2 Time: %ld usecs\n", phase21 - phase11);
+            printf("Phase 2|Generic SIMD Time: %ld usecs\n", phase21 - phase11);
 
             for (i = 0; i < nProbes; i++) {
                 printf("Probe: %d | Range: %d\n", probes[i], ranges[i]);
             }
 
             long phase31 = getCurrentTime();
-            printf("Phase 3|2 Time: %ld usecs\n", phase31 - phase21);
+            printf("Phase 3|Generic SIMD Time: %ld usecs\n", phase31 - phase21);
         }
 
         if (levels == 3 && fanout[0] == 9 && fanout[1] == 5 && fanout[2] == 9) {
@@ -89,14 +89,14 @@ int main(int argc, char **argv) {
             int32_t *result = searchSIMD959Tree(tree, probes, nProbes);
 
             long phase22 = getCurrentTime();
-            printf("Phase 2|3 Time: %ld usecs\n", phase22 - phase12);
+            printf("Phase 2|Hardcoded SIMD Time: %ld usecs\n", phase22 - phase12);
 
             for (i = 0; i < nProbes; i++) {
                 printf("Probe: %d | Range: %d\n", probes[i], result[i]);
             }
 
             long phase32 = getCurrentTime();
-            printf("Phase 3|3 Time: %ld usecs\n", phase32 - phase22);
+            printf("Phase 3|Hardcoded SIMD Time: %ld usecs\n", phase32 - phase22);
         }
 
         return 0;

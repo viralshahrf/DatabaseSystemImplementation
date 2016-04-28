@@ -70,7 +70,7 @@ int searchTree(int32_t **tree, int *fanout, int levels, int32_t value) {
         } else if (range[0] == -1) {
             rOffset = ((range[1] + 1 + adj) * (fanout[iLevel+1] - 1)) - 1;
             lOffset = rOffset - fanout[iLevel+1] + 2;
-            adj += range[0] + 1;
+            adj += range[1];
         } else {
             lOffset = (range[0] + 1 + adj) * (fanout[iLevel+1] -1);
             rOffset = lOffset + fanout[iLevel+1] - 2;
